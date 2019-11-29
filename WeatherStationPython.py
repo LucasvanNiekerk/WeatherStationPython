@@ -24,18 +24,12 @@ arrow_up = [
 ]
 
 def upload_animation():
-    s.set_pixels(arrow_up)
-    sleep(1)
-    s.clear()
-    sleep(1)
-
-def upload_animation2():
   for i in range(7, -1, -1):
     s.set_pixels(arrow_up)
-    sleep(.2)
+    sleep(.1)
     for j in range(8):
       s.set_pixel(j, i, e)
-    sleep(.2)
+    sleep(.1)
 
 
 def UDP_Sender():
@@ -47,10 +41,11 @@ def UDP_Sender():
     data = "{\"raspberryId\":\"" + raspberry_id + "\",\"temperature\":\"" + temperature + "\",\"humidity\":\"" + humidity + "\",\"timeStamp\":\"" + time + "\"}"
     mySocket.sendto(bytes(data.encode("UTF-8")), ('<broadcast>', BROADCAST_TO_PORT))
     sleep(1)
+    #TODO set the update time!!!
 
 mySocket = socket(AF_INET, SOCK_DGRAM)
 mySocket.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
 
 while True:
-    upload_animation2()
+    upload_animation()
     UDP_Sender()
