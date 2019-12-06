@@ -11,6 +11,7 @@ s.clear()
 
 e = (0, 0, 0)  # Empty
 r = (255, 0, 0)  # Red
+b = (80, 186, 255) # Blue
 
 arrow_up = [
     r, r, r, r, r, r, r, r,
@@ -23,23 +24,46 @@ arrow_up = [
     e, e, e, r, r, e, e, e
 ]
 
-cross = [
-    r, e, e, e, e, e, e, r,
-    e, r, e, e, e, e, r, e,
-    e, e, r, e, e, r, e, e,
-    e, e, e, r, r, e, e, e,
-    e, e, e, r, r, e, e, e,
-    e, e, r, e, e, r, e, e,
-    e, r, e, e, e, e, r, e,
-    r, e, e, e, e, e, e, r
+connection1 = [
+    e, e, e, e, e, e, e, e,
+    e, e, e, e, e, e, e, e,
+    e, e, e, e, e, e, e, e,
+    e, e, e, e, e, e, e, e,
+    e, e, e, e, e, e, e, e,
+    e, e, e, e, e, e, e, e,
+    b, b, e, e, e, e, e, e,
+    b, b, e, e, e, e, e, e
 ]
 
-def error_animation():
-    for i in range(4):
-        s.set_pixels(cross)
-        sleep(.1)
-        s.clear()
-        sleep(.1)
+connection2 = [
+    e, e, e, e, e, e, e, e,
+    e, e, e, e, e, e, e, e,
+    e, e, e, e, e, e, e, e,
+    e, e, e, e, e, e, e, e,
+    e, e, e, b, b, e, e, e,
+    e, e, e, b, b, e, e, e,
+    b, b, e, b, b, e, e, e,
+    b, b, e, b, b, e, e, e
+]
+
+connection3 = [
+    e, e, e, e, e, e, e, e,
+    e, e, e, e, e, e, e, e,
+    e, e, e, e, e, e, b, b,
+    e, e, e, e, e, e, b, b,
+    e, e, e, b, b, e, b, b,
+    e, e, e, b, b, e, b, b,
+    b, b, e, b, b, e, b, b,
+    b, b, e, b, b, e, b, b
+]
+
+def connect_animation():
+    s.set_pixels(connection1)
+    sleep(.5)
+    s.set_pixels(connection2)
+    sleep(.5)
+    s.set_pixels(connection3)
+    sleep(.5)
 
 def upload_animation():
     for i in range(7, -1, -1):
@@ -71,4 +95,4 @@ while True:
         sleep(900)
     except error as err:
         print (err)
-        error_animation()
+        connect_animation()
