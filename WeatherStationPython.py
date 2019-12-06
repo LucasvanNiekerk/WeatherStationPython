@@ -42,12 +42,13 @@ def error_animation():
         sleep(.1)
 
 def upload_animation():
-  for i in range(7, -1, -1):
-    s.set_pixels(arrow_up)
-    sleep(.1)
-    for j in range(8):
-      s.set_pixel(j, i, e)
-    sleep(.1)
+    for i in range(7, -1, -1):
+        s.set_pixels(arrow_up)
+        sleep(.1)
+        for j in range(8):
+            s.set_pixel(j, i, e)
+        sleep(.1)
+    s.clear()
 
 
 def UDP_Sender():
@@ -58,9 +59,7 @@ def UDP_Sender():
 
     data = "{\"raspberryId\":\"" + raspberry_id + "\",\"temperature\":\"" + temperature + "\",\"humidity\":\"" + humidity + "\",\"timeStamp\":\"" + time + "\"}"
     mySocket.sendto(bytes(data.encode("UTF-8")), ('<broadcast>', BROADCAST_TO_PORT))
-    sleep(1)
     upload_animation()
-    #TODO set the update time!!!
 
 mySocket = socket(AF_INET, SOCK_DGRAM)
 mySocket.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
@@ -68,6 +67,8 @@ mySocket.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
 while True:
     try:
         UDP_Sender()
+        #15 minutes sleep
+        sleep(900)
     except error as err:
         print (err)
         error_animation()
