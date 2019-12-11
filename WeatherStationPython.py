@@ -2,6 +2,7 @@ from sense_hat import SenseHat
 from time import sleep
 from socket import *
 from datetime import datetime
+from multiprocessing import Process
 
 BROADCAST_TO_PORT = 7000
 
@@ -88,11 +89,25 @@ def UDP_Sender():
 mySocket = socket(AF_INET, SOCK_DGRAM)
 mySocket.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
 
-while True:
-    try:
-        UDP_Sender()
-        #15 minutes sleep
-        sleep(900)
-    except error as err:
-        print (err)
-        connect_animation()
+def joystick():
+    while True:
+        for event in s.stick.get_events():
+            if event.action == "pressed":
+                if event.direction == "middle":
+                    UDP_Sender()
+
+def updateEvery15Minute():
+    while True:
+        try:
+            UDP_Sender()
+            # 900x60 = 15 minutes sleep
+            sleep(900)
+        except error as err:
+            print (err)
+            connect_animation()
+
+
+process1 = Process(target=joystick)
+process2 = Process(target=updateEvery15Minute)
+process1.start()
+process2.start()
